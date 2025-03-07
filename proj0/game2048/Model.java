@@ -138,6 +138,11 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for (int col = 0; col < b.size(); col++){
+            for (int row = 0; row < b.size(); row++){
+                if(b.tile(col,row) == null) return true;
+            }
+        }
         return false;
     }
 
@@ -148,6 +153,13 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (int col = 0; col < b.size(); col++){
+            for (int row = 0; row < b.size(); row++){
+                Tile t = b.tile(col,row);
+                if(t == null) continue;
+                else if (t.value() == MAX_PIECE) return true;
+            }
+        }
         return false;
     }
 
@@ -159,6 +171,20 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)) return true;
+        int[][] vec = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+        for (int col = 0; col < b.size(); col++){
+            for (int row = 0; row < b.size(); row++){
+                for (int i = 0; i < 4; i++){
+                    int newcol = col + vec[i][0];
+                    int newrow = row + vec[i][1];
+                    if(newcol >= 0 && newcol < b.size() && newrow >= 0 && newrow < b.size() &&
+                            b.tile(newcol,newrow) != null){
+                        if (b.tile(col,row).value() == b.tile(newcol,newrow).value()) return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
