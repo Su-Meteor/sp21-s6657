@@ -6,6 +6,7 @@ import java.util.Observable;
 
 /** The state of a game of 2048.
  *  @author TODO: YOUR NAME HERE
+ *  SuMeteor
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -113,6 +114,39 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+
+        for (int col = 0; col < board.size();col++){
+            int bottom = board.size();
+            for (int row = board.size() - 2; row >= 0; row--){
+                int mid = 0;
+                if (board.tile(col,row) != null)
+                    mid = board.tile(col,row).value();
+                if (mid != 0){
+                    for (int nrow = row + 1; nrow < bottom; nrow++){
+                        if (board.tile(col,nrow) != null) {
+                            if (board.tile(col, nrow).value() != mid) {
+                                board.move(col, nrow - 1, board.tile(col, row));
+                                changed = true;
+                                break;
+                            } else if (board.tile(col, nrow).value() == board.tile(col, row).value()) {
+                                board.move(col, nrow, board.tile(col, row));
+                                score += mid * 2;
+                                bottom = nrow;
+                                changed = true;
+                            }
+                        }
+                        else if (nrow == bottom - 1) {
+                            board.move(col, nrow, board.tile(col, row));
+                            changed = true;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
@@ -120,7 +154,6 @@ public class Model extends Observable {
         }
         return changed;
     }
-
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
      */
