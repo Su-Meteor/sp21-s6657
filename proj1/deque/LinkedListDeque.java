@@ -2,13 +2,13 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<Item>implements Deque<Item>,Iterable<Item> {
+public class LinkedListDeque<T>implements Deque<T>,Iterable<T>{
     private class Note{
-        public Item item;
+        public T item;
         public Note previous;
         public Note next;
 
-        public Note (Item i, Note pre, Note nxt){
+        public Note (T i, Note pre, Note nxt){
             item = i;
             previous = pre;
             next = nxt;
@@ -24,7 +24,7 @@ public class LinkedListDeque<Item>implements Deque<Item>,Iterable<Item> {
         sentinel.previous = sentinel;
         size = 0;
     }
-    public LinkedListDeque(Item x){
+    public LinkedListDeque(T x){
         sentinel = new Note(null, null, null);
         sentinel.next = new Note(x, sentinel, sentinel);
         size = 1;
@@ -36,11 +36,11 @@ public class LinkedListDeque<Item>implements Deque<Item>,Iterable<Item> {
         return sentinel.next == sentinel || sentinel.previous == sentinel;
     }
     @Override
-    public int size() {
+    public int size(){
         return size;
     }
     @Override
-    public void addFirst(Item item){
+    public void addFirst(T item){
         Note newnote = new Note(item,null,null);
         newnote.previous = sentinel;
         newnote.next = sentinel.next;
@@ -49,7 +49,7 @@ public class LinkedListDeque<Item>implements Deque<Item>,Iterable<Item> {
         size++;
     }
     @Override
-    public void addLast(Item item){
+    public void addLast(T item){
         Note newnote = new Note(item,null,null);
         newnote.next = sentinel;
         newnote.previous = sentinel.previous;
@@ -59,34 +59,41 @@ public class LinkedListDeque<Item>implements Deque<Item>,Iterable<Item> {
     }
 
     @Override
-    public Item removeFirst(){
-        if (isEmpty()) return null;
-        Item item = sentinel.next.item;
+    public T removeFirst(){
+        if (isEmpty()) {
+            return null;
+        }
+        T item = sentinel.next.item;
         sentinel.next.next.previous = sentinel;
         sentinel.next = sentinel.next.next;
         size--;
         return item;
     }
     @Override
-    public Item removeLast(){
-        if (isEmpty()) return null;
-        Item item = sentinel.previous.item;
+    public T removeLast(){
+        if (isEmpty()) {
+            return null;
+        }
+        T item = sentinel.previous.item;
         sentinel.previous.previous.next = sentinel;
         sentinel.previous = sentinel.previous.previous;
         size--;
         return item;
     }
     @Override
-    public Item get(int index){
+    public T get(int index){
         Note midnote = sentinel.next;
-        if (size == 0 || index > size) return null;
-        else for(int i = 0; i < index; i++){
-            midnote = midnote.next;
+        if (size == 0 || index > size) {
+            return null;
+        } else {
+            for(int i = 0; i < index; i++){
+                midnote = midnote.next;
+            }
         }
         return midnote.item;
     }
     @Override
-    public void printDeque(){
+    public void printDeque() {
         Note mid = sentinel;
         if (size == 0) System.out.println("null");
         for (int i = 0; i < size; i++){
@@ -95,36 +102,36 @@ public class LinkedListDeque<Item>implements Deque<Item>,Iterable<Item> {
         }
     }
     //一个以递归实现的get()
-    public Item getRecursive(int index){
+    public T getRecursive(int index) {
         Note mid = sentinel;
         return getRecursive(mid.next,index);
     }
-    public Item getRecursive(Note n,int index){
+    public T getRecursive(Note n,int index){
         if (index == 0) return n.item;
         n = n.next;
         index--;
         return getRecursive(n,index);
     }
     //实现Iterator
-    private class LinkedListDequeIterator implements Iterator<Item> {
+    private class LinkedListDequeIterator implements Iterator<T>{
         private int pos;
-        public LinkedListDequeIterator(){
+        public LinkedListDequeIterator() {
             pos = 0;
         }
         @Override
-        public boolean hasNext() {
+        public boolean hasNext(){
             return pos < size;
         }
 
         @Override
-        public Item next() {
-            Item item = get(pos);
+        public T next(){
+            T item = get(pos);
             pos += 1;
             return item;
         }
     }
     @Override
-    public Iterator<Item> iterator(){
+    public Iterator<T> iterator(){
         return new LinkedListDequeIterator();
     }
 }

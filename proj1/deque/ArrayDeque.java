@@ -2,25 +2,26 @@ package deque;
 
 import static org.junit.Assert.assertEquals;
 
-public class ArrayDeque<Item> implements Deque<Item>{
-    private Item[] items;
+public class ArrayDeque<T> implements Deque<T>{
+    private T[] items;
     private int size;
     private int firstIndex = 0;
     private int lastIndex = 7;
     private final int MIN_LENGTH = 8;
     private int length = MIN_LENGTH;
 
-
+    //初始化
     public ArrayDeque(){
-        items = (Item[]) new Object[length];
+        items = (T[])new Object[length];
         size = 0;
     }
-    public ArrayDeque(Item x){
-        items = (Item[]) new Object[length];
+    public ArrayDeque(T x){
+        items = (T[])new Object[length];
         items[firstIndex] = x;
         size = 1;
     }
 
+    //调整函数
     private int adjustIndex(int index,boolean forward){
         if (forward){
             index--;
@@ -32,7 +33,7 @@ public class ArrayDeque<Item> implements Deque<Item>{
         return index;
     }
     private void adjustLength(int newl,boolean extend){
-        Item[] a = (Item[]) new Object[newl];
+        T[] a = (T[])new Object[newl];
         int idx = firstIndex;
         //copy array
         if (extend) for (int i = 0;i < size - 1; i++){
@@ -56,8 +57,9 @@ public class ArrayDeque<Item> implements Deque<Item>{
         lastIndex = adjustIndex(lastIndex,forward);
     }
 
+    //重写方法
     @Override
-    public void addFirst(Item item) {
+    public void addFirst(T item){
         size++;
         if (size > length){
             adjustLength(length * 4,true);
@@ -68,7 +70,7 @@ public class ArrayDeque<Item> implements Deque<Item>{
     }
 
     @Override
-    public void addLast(Item item) {
+    public void addLast(T item){
         size++;
         if (size > length){
             adjustLength(length * 4,true);
@@ -79,17 +81,17 @@ public class ArrayDeque<Item> implements Deque<Item>{
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty(){
         return size == 0;
     }
 
     @Override
-    public int size() {
+    public int size(){
         return size;
     }
 
     @Override
-    public void printDeque() {
+    public void printDeque(){
         //
         int idx = firstIndex;
         for (int i = 0;i < size; i++){
@@ -99,9 +101,11 @@ public class ArrayDeque<Item> implements Deque<Item>{
     }
 
     @Override
-    public Item removeFirst() {
-        if (size <= 0) return null;
-        Item mid = items[firstIndex];
+    public T removeFirst(){
+        if (size <= 0) {
+            return null;
+        }
+        T mid = items[firstIndex];
         size--;
         items[firstIndex] = null;
         adjustFirstIndex(false);
@@ -113,13 +117,17 @@ public class ArrayDeque<Item> implements Deque<Item>{
     }
 
     @Override
-    public Item removeLast() {
-        if (size <= 0) return null;
-        Item mid = items[lastIndex];
+    public T removeLast(){
+        if (size <= 0) {
+            return null;
+        }
+        T mid = items[lastIndex];
         size--;
         items[lastIndex] = null;
         adjustLastIndex(true);
-        if (size < 0) return null;
+        if (size < 0) {
+            return null;
+        }
         if (size <= length / 4 && length != MIN_LENGTH) {
             adjustLength(length / 4, false);
             length = length / 4;
@@ -128,21 +136,23 @@ public class ArrayDeque<Item> implements Deque<Item>{
     }
 
     @Override
-    public Item get(int index) {
-        Item item;
+    public T get(int index){
+        T item;
         int idx = firstIndex;
-        for (int i = 0; i < index;i++) idx = adjustIndex(idx,false);
+        for (int i = 0; i < index;i++) {
+            idx = adjustIndex(idx,false);
+        }
         item = items[idx];
         return item;
     }
 
-    public static void main(String[] args){
-        ArrayDeque<Integer> ard = new ArrayDeque<>();
-        for (int i = 0; i < 10;i++){
-            ard.addFirst(i);
-        }
-        for (int i = 0; i < 10;i++) {
-            System.out.println(ard.removeLast());
-        }
-    }
+//    public static void main(String[] args){
+//        ArrayDeque<Integer> ard = new ArrayDeque<>();
+//        for (int i = 0; i < 10;i++){
+//            ard.addFirst(i);
+//        }
+//        for (int i = 0; i < 10;i++) {
+//            System.out.println(ard.removeLast());
+//        }
+//    }
 }
