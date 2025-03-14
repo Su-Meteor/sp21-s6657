@@ -191,35 +191,35 @@ public class ArrayDeque<T> implements Deque<T>{
         }
         return true;
     }
-    public static void main(String[] args){
-//        ArrayDeque<Integer> ard = new ArrayDeque<>();
-//        for (int i = 0; i < 10;i++){
-//            ard.addLast(i);
+//    public static void main(String[] args){
+////        ArrayDeque<Integer> ard = new ArrayDeque<>();
+////        for (int i = 0; i < 10;i++){
+////            ard.addLast(i);
+////        }
+////        Iterator<Integer> seer = ard.iterator();
+////        for (int i = 0; i < 9; i++) {
+////            int x = seer.next();
+////            System.out.println(x);
+////        }
+////        boolean d = seer.hasNext();
+////        System.out.println(d);
+////        System.out.println(seer.next());
+////        System.out.println(seer.hasNext());
+////        ard.printDeque();
+//        ArrayDeque<Integer> ard1 = new ArrayDeque<>();
+//        ArrayDeque<Integer> ard2 = new ArrayDeque<>();
+//        for(int i = 0;i < 10;i++){
+//            ard1.addLast(i);
+//            ard2.addLast(i);
 //        }
-//        Iterator<Integer> seer = ard.iterator();
-//        for (int i = 0; i < 9; i++) {
-//            int x = seer.next();
-//            System.out.println(x);
-//        }
-//        boolean d = seer.hasNext();
-//        System.out.println(d);
-//        System.out.println(seer.next());
-//        System.out.println(seer.hasNext());
-//        ard.printDeque();
-        ArrayDeque<Integer> ard1 = new ArrayDeque<>();
-        ArrayDeque<Integer> ard2 = new ArrayDeque<>();
-        for(int i = 0;i < 10;i++){
-            ard1.addLast(i);
-            ard2.addLast(i);
-        }
-        boolean a = ard1.equals(ard2);
-        boolean b = ard2.equals(ard1);;
-        ard1.addLast(10);
-        boolean c = ard1.equals(ard2);
-        ard1.removeLast();
-        ard1.removeLast();
-        ard1.addLast(10);
-        boolean d = ard1.equals(ard2);
-        return;
-    }
+//        boolean a = ard1.equals(ard2);
+//        boolean b = ard2.equals(ard1);;
+//        ard1.addLast(10);
+//        boolean c = ard1.equals(ard2);
+//        ard1.removeLast();
+//        ard1.removeLast();
+//        ard1.addLast(10);
+//        boolean d = ard1.equals(ard2);
+//        return;
+//    }
 }
