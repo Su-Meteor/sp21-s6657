@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import static org.junit.Assert.assertTrue;
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T>,Iterable<T>{
     private T[] items;
     private int size;
     private int firstIndex = 0;
