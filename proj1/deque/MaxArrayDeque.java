@@ -1,5 +1,5 @@
 package deque;
 
-public class MaxArrayDeque<T> implements Deque<T>, Iterable<T>{
+public class MaxArrayDeque<T>{
     private T[] items;
 }

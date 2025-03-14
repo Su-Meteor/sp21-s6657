@@ -116,7 +116,7 @@ public class LinkedListDequeTest{
     }
 
     @Test
-    public void testGetMethod(){
+    public void testGetMethod() {
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
         for (int i = 0; i < 10; i++) {
             lld.addLast(i);
@@ -125,7 +125,7 @@ public class LinkedListDequeTest{
         assertEquals(5,val);
     }
     @Test
-    public void testGetMethodInBigLLD(){
+    public void testGetMethodInBigLLD() {
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
         for (int i = 0; i < 100000; i++) {
             lld.addLast(i);
@@ -134,7 +134,7 @@ public class LinkedListDequeTest{
         assertEquals(1000,val);
     }
     @Test
-    public void testGetRecursiveMethod(){
+    public void testGetRecursiveMethod() {
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
         for (int i = 0; i < 10; i++) {
             lld.addLast(i);
@@ -143,7 +143,7 @@ public class LinkedListDequeTest{
         assertEquals(5,val);
     }
     @Test
-    public void testGetRecursiveMethodInBigLLD(){
+    public void testGetRecursiveMethodInBigLLD() {
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
         for (int i = 0; i < 100000; i++) {
             lld.addLast(i);
@@ -152,13 +152,13 @@ public class LinkedListDequeTest{
         assertEquals(1000,val);
     }
     @Test
-    public void CreateAEmptyLLD(){
+    public void CreateAEmptyLLD() {
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
         assertEquals(0,lld.size());
         assertTrue(lld.isEmpty());
     }
     @Test
-    public void testIterator(){
+    public void testIterator() {
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
         for (int i = 0; i < 5; i++) {
             lld.addLast(i);
@@ -169,5 +169,15 @@ public class LinkedListDequeTest{
         }
         assertTrue(seer.hasNext());
         assertEquals(4,(int)seer.next());
+    }
+    @Test
+    public void testEquals() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+        for (int i = 0; i < 3; i++) {
+            lld1.addLast(i);
+            lld2.addLast(i);
+        }
+        assertTrue(lld1.equals(lld2));
     }
 }

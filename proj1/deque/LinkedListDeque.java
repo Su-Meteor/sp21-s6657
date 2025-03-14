@@ -4,12 +4,12 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
-    private class Note{
-        public T item;
-        public Note previous;
-        public Note next;
+    class Note {
+        private T item;
+        private Note previous;
+        private Note next;
 
-        public Note (T i, Note pre, Note nxt){
+        Note(T i, Note pre, Note nxt) {
             item = i;
             previous = pre;
             next = nxt;
@@ -19,7 +19,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
     private Note sentinel;
     //初始化
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         sentinel = new Note(null, null, null);
         sentinel.next = sentinel;
         sentinel.previous = sentinel;
@@ -37,7 +37,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public void addFirst(T item) {
-        Note newnote = new Note(item,null, null);
+        Note newnote = new Note(item, null, null);
         newnote.previous = sentinel;
         newnote.next = sentinel.next;
         sentinel.next.previous = newnote;
@@ -46,7 +46,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public void addLast(T item) {
-        Note newnote = new Note(item,null, null);
+        Note newnote = new Note(item, null, null);
         newnote.next = sentinel;
         newnote.previous = sentinel.previous;
         sentinel.previous.next = newnote;
@@ -82,7 +82,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0 || index > size) {
             return null;
         } else {
-            for(int i = 0; i < index; i++){
+            for (int i = 0; i < index; i++) {
                 midnote = midnote.next;
             }
         }
@@ -135,25 +135,21 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public boolean equals(Object o) {
-        if(this == o) {
+        if (this == o) {
             return true;
         }
-        if(o == null) {
+        if (o == null) {
             return false;
         }
-        if(!(o instanceof Deque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
         Deque<T> mid = (Deque<T>) o;
-        if(mid.size() != this.size()) {
+        if (mid.size() != this.size()) {
             return false;
         }
-        for(int i = 0;i < mid.size();i++) {
-            if(mid.get(i).equals(this.get(i))) {
-                return true;
-            } else {
-                return false;
-            }
+        for (int i = 0; i < mid.size(); i++) {
+            return mid.get(i).equals(this.get(i));
         }
         return true;
     }

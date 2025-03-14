@@ -2,8 +2,6 @@ package deque;
 
 import java.util.Iterator;
 
-import static org.junit.Assert.assertTrue;
-
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
@@ -14,12 +12,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     //初始化
     public ArrayDeque() {
-        items = (T[])new Object[length];
+        items = (T[]) new Object[length];
         size = 0;
     }
 
     //调整函数
-    private int adjustIndex(int index,boolean forward) {
+    private int adjustIndex(int index, boolean forward) {
         if (forward) {
             index--;
             if (index < 0) {
@@ -33,19 +31,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         return index;
     }
-    private void adjustLength(int newl,boolean extend) {
+    private void adjustLength(int newl, boolean extend) {
         T[] a = (T[]) new Object[newl];
         int idx = firstIndex;
         //copy array
         if (extend) {
-            for (int i = 0;i < size - 1; i++) {
+            for (int i = 0; i < size - 1; i++) {
                 a[i] = items[idx];
                 idx = adjustIndex(idx, false);
                 firstIndex = 0;
                 lastIndex = size - 2;
             }
         } else {
-            for (int i = 0;i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 a[i] = items[idx];
                 idx = adjustIndex(idx, false);
                 firstIndex = 0;
@@ -66,7 +64,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public void addFirst(T item) {
         size++;
         if (size > length) {
-            adjustLength(length * 4,true);
+            adjustLength(length * 4, true);
             length = length * 4;
         }
         adjustFirstIndex(true);
@@ -98,7 +96,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public void printDeque() {
         //
         int idx = firstIndex;
-        for (int i = 0;i < size; i++) {
+        for (int i = 0; i < size; i++) {
             System.out.println(get(idx));
             idx = adjustIndex(idx, false);
         }
@@ -143,8 +141,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public T get(int index) {
         T item;
         int idx = firstIndex;
-        for (int i = 0; i < index;i++) {
-            idx = adjustIndex(idx,false);
+        for (int i = 0; i < index; i++) {
+            idx = adjustIndex(idx, false);
         }
         item = items[idx];
         return item;
@@ -163,12 +161,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 //            }else{
 //                return false;
 //            }
-            return (null != get(adjustIndex(pos,false)));
+            return (null != get(adjustIndex(pos, false)));
         }
         @Override
         public T next() {
             T item = get(pos);
-            pos = adjustIndex(pos,false);
+            pos = adjustIndex(pos, false);
             return item;
         }
     }
@@ -178,21 +176,21 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public boolean equals(Object o) {
-        if(this == o) {
+        if (this == o) {
             return true;
         }
-        if(o == null) {
+        if (o == null) {
             return false;
         }
-        if(!(o instanceof Deque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
         Deque<T> mid = (Deque<T>) o;
-        if(mid.size() != this.size()) {
+        if (mid.size() != this.size()) {
             return false;
         }
-        for(int i = 0;i < mid.size();i++) {
-            if(!(mid.get(i).equals(this.get(i)))) {
+        for (int i = 0; i < mid.size(); i++) {
+            if (!(mid.get(i).equals(this.get(i)))) {
                 return false;
             }
         }
