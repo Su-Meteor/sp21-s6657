@@ -1,10 +1,9 @@
 package deque;
 
 import java.util.Iterator;
-import java.util.Objects;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
-    class Note {
+    private class Note {
         private T item;
         private Note previous;
         private Note next;
@@ -27,10 +26,6 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     //实现Deque
-    @Override
-    public boolean isEmpty() {
-        return sentinel.next == sentinel || sentinel.previous == sentinel;
-    }
     @Override
     public int size() {
         return size;
