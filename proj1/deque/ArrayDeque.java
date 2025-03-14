@@ -1,6 +1,8 @@
 package deque;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Iterator;
+
+import static org.junit.Assert.assertTrue;
 
 public class ArrayDeque<T> implements Deque<T>{
     private T[] items;
@@ -14,11 +16,6 @@ public class ArrayDeque<T> implements Deque<T>{
     public ArrayDeque(){
         items = (T[])new Object[length];
         size = 0;
-    }
-    public ArrayDeque(T x){
-        items = (T[])new Object[length];
-        items[firstIndex] = x;
-        size = 1;
     }
 
     //调整函数
@@ -146,13 +143,83 @@ public class ArrayDeque<T> implements Deque<T>{
         return item;
     }
 
-//    public static void main(String[] args){
+    public class ArrayDequeIterator implements Iterator<T> {
+        int pos;
+
+        ArrayDequeIterator(){
+            pos = firstIndex;
+        }
+        @Override
+        public boolean hasNext() {
+//            if (null != get(adjustIndex(pos,false))) {
+//                return true;
+//            }else{
+//                return false;
+//            }
+            return (null != get(adjustIndex(pos,false)));
+        }
+        @Override
+        public T next() {
+            T item = get(pos);
+            pos = adjustIndex(pos,false);
+            return item;
+        }
+    }
+    @Override
+    public Iterator<T> iterator(){
+        return new ArrayDequeIterator();
+    }
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(o == null){
+            return false;
+        }
+        if(!(o instanceof Deque)){
+            return false;
+        }
+        Deque<T> mid = (Deque<T>) o;
+        if(mid.size() != this.size()){
+            return false;
+        }
+        for(int i = 0;i < mid.size();i++){
+            if(!(mid.get(i).equals(this.get(i)))){
+                return false;
+            }
+        }
+        return true;
+    }
+    public static void main(String[] args){
 //        ArrayDeque<Integer> ard = new ArrayDeque<>();
 //        for (int i = 0; i < 10;i++){
-//            ard.addFirst(i);
+//            ard.addLast(i);
 //        }
-//        for (int i = 0; i < 10;i++) {
-//            System.out.println(ard.removeLast());
+//        Iterator<Integer> seer = ard.iterator();
+//        for (int i = 0; i < 9; i++) {
+//            int x = seer.next();
+//            System.out.println(x);
 //        }
-//    }
+//        boolean d = seer.hasNext();
+//        System.out.println(d);
+//        System.out.println(seer.next());
+//        System.out.println(seer.hasNext());
+//        ard.printDeque();
+        ArrayDeque<Integer> ard1 = new ArrayDeque<>();
+        ArrayDeque<Integer> ard2 = new ArrayDeque<>();
+        for(int i = 0;i < 10;i++){
+            ard1.addLast(i);
+            ard2.addLast(i);
+        }
+        boolean a = ard1.equals(ard2);
+        boolean b = ard2.equals(ard1);;
+        ard1.addLast(10);
+        boolean c = ard1.equals(ard2);
+        ard1.removeLast();
+        ard1.removeLast();
+        ard1.addLast(10);
+        boolean d = ard1.equals(ard2);
+        return;
+    }
 }

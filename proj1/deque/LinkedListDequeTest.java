@@ -118,28 +118,36 @@ public class LinkedListDequeTest{
     @Test
     public void testGetMethod(){
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
-        for (int i = 0; i < 10; i++) lld.addLast(i);
+        for (int i = 0; i < 10; i++) {
+            lld.addLast(i);
+        }
         int val = lld.get(5);
         assertEquals(5,val);
     }
     @Test
     public void testGetMethodInBigLLD(){
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
-        for (int i = 0; i < 100000; i++) lld.addLast(i);
+        for (int i = 0; i < 100000; i++) {
+            lld.addLast(i);
+        }
         int val = lld.get(1000);
         assertEquals(1000,val);
     }
     @Test
     public void testGetRecursiveMethod(){
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
-        for (int i = 0; i < 10; i++) lld.addLast(i);
+        for (int i = 0; i < 10; i++) {
+            lld.addLast(i);
+        }
         int val = lld.getRecursive(5);
         assertEquals(5,val);
     }
     @Test
     public void testGetRecursiveMethodInBigLLD(){
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
-        for (int i = 0; i < 100000; i++) lld.addLast(i);
+        for (int i = 0; i < 100000; i++) {
+            lld.addLast(i);
+        }
         int val = lld.getRecursive(1000);
         assertEquals(1000,val);
     }
@@ -152,9 +160,13 @@ public class LinkedListDequeTest{
     @Test
     public void testIterator(){
         LinkedListDeque<Integer> lld = new LinkedListDeque<>();
-        for (int i = 0; i < 5; i++) lld.addLast(i);
+        for (int i = 0; i < 5; i++) {
+            lld.addLast(i);
+        }
         Iterator<Integer> seer = lld.iterator();
-        for (int i = 0; i < 4; i++) assertEquals(i,(int)seer.next());
+        for (int i = 0; i < 4; i++) {
+            assertEquals(i, (int) seer.next());
+        }
         assertTrue(seer.hasNext());
         assertEquals(4,(int)seer.next());
     }

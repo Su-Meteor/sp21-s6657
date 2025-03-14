@@ -1,6 +1,7 @@
 package deque;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class LinkedListDeque<T>implements Deque<T>,Iterable<T>{
     private class Note{
@@ -23,11 +24,6 @@ public class LinkedListDeque<T>implements Deque<T>,Iterable<T>{
         sentinel.next = sentinel;
         sentinel.previous = sentinel;
         size = 0;
-    }
-    public LinkedListDeque(T x){
-        sentinel = new Note(null, null, null);
-        sentinel.next = new Note(x, sentinel, sentinel);
-        size = 1;
     }
 
     //实现Deque
@@ -107,7 +103,9 @@ public class LinkedListDeque<T>implements Deque<T>,Iterable<T>{
         return getRecursive(mid.next,index);
     }
     public T getRecursive(Note n,int index){
-        if (index == 0) return n.item;
+        if (index == 0) {
+            return n.item;
+        }
         n = n.next;
         index--;
         return getRecursive(n,index);
@@ -122,7 +120,6 @@ public class LinkedListDeque<T>implements Deque<T>,Iterable<T>{
         public boolean hasNext(){
             return pos < size;
         }
-
         @Override
         public T next(){
             T item = get(pos);
@@ -133,5 +130,29 @@ public class LinkedListDeque<T>implements Deque<T>,Iterable<T>{
     @Override
     public Iterator<T> iterator(){
         return new LinkedListDequeIterator();
+    }
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(o == null){
+            return false;
+        }
+        if(!(o instanceof Deque)){
+            return false;
+        }
+        Deque<T> mid = (Deque<T>) o;
+        if(mid.size() != this.size()){
+            return false;
+        }
+        for(int i = 0;i < mid.size();i++){
+            if(mid.get(i).equals(this.get(i))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return true;
     }
 }
