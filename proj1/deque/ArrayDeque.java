@@ -156,7 +156,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 //            }else{
 //                return false;
 //            }
-            return (null != get(adjustIndex(pos, false)));
+//            return (null != get(adjustIndex(pos, false)));
+            return pos != lastIndex;
         }
         @Override
         public T next() {
