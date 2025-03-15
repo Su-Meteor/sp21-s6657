@@ -153,7 +153,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         public boolean hasNext() {
 //            if (null != get(adjustIndex(pos,false))) {
 //                return true;
-//            }else{
+//            } else {
 //                return false;
 //            }
 //            return (null != get(adjustIndex(pos, false)));
