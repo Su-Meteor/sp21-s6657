@@ -75,6 +75,16 @@ public class ArrayDequeTest {
         }
         assertFalse(seer.hasNext());
         assertEquals(9,(int)seer.next());
+
+        ArrayDeque<Integer> ard1 = new ArrayDeque<>();
+        for (int i = 0; i < 10;i++){
+            ard1.addLast(i);
+        }
+        Iterator<Integer> seer1 = ard1.iterator();
+        for (int i = 0; i < 100000; i++) {
+            seer.next();
+        }
+        System.out.println(seer.hasNext());
     }
     @Test
     public void testEquals(){
@@ -92,17 +102,5 @@ public class ArrayDequeTest {
         ard1.removeLast();
         ard1.addLast(10);
         assertFalse(ard1.equals(ard2));
-    }
-    @Test
-    public void RandomizedTest(){
-        ArrayDeque<Integer> ard = new ArrayDeque<>();
-        int N = 100000;
-
-        for(int i = 0; i < N;i++){
-            int opNum = StdRandom.uniform(0,3);
-            if(opNum == 0){
-                //
-            }
-        }
     }
 }

@@ -2,6 +2,9 @@ package deque;
 
 import java.util.Iterator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
@@ -144,25 +147,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     private class ArrayDequeIterator implements Iterator<T> {
-        int pos;
+        private int pos;
 
         ArrayDequeIterator() {
-            pos = firstIndex;
+            pos = 0;
         }
         @Override
         public boolean hasNext() {
-//            if (null != get(adjustIndex(pos,false))) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//            return (null != get(adjustIndex(pos, false)));
-            return pos != lastIndex;
+            return pos < size - 1;
         }
         @Override
         public T next() {
             T item = get(pos);
-            pos = adjustIndex(pos, false);
+            pos = pos + 1;
             return item;
         }
     }
@@ -194,33 +191,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 //    public static void main(String[] args){
 ////        ArrayDeque<Integer> ard = new ArrayDeque<>();
-////        for (int i = 0; i < 10;i++){
+////        Iterator<Integer> seer = ard.iterator();
+////        Iterator<Integer> seer1 = null;
+////        for (int i = 0; i < 10; i++) {
 ////            ard.addLast(i);
 ////        }
-////        Iterator<Integer> seer = ard.iterator();
-////        for (int i = 0; i < 9; i++) {
-////            int x = seer.next();
-////            System.out.println(x);
+////        int y;
+////        for (int i = 0; i < 100; i++) {
+////            seer.next();
 ////        }
-////        boolean d = seer.hasNext();
-////        System.out.println(d);
-////        System.out.println(seer.next());
-////        System.out.println(seer.hasNext());
-////        ard.printDeque();
-//        ArrayDeque<Integer> ard1 = new ArrayDeque<>();
-//        ArrayDeque<Integer> ard2 = new ArrayDeque<>();
-//        for(int i = 0;i < 10;i++){
-//            ard1.addLast(i);
-//            ard2.addLast(i);
+////        boolean x = seer.hasNext();
+//        ArrayDeque<Integer> ard = new ArrayDeque<>();
+//        for (int i = 0; i < 10;i++){
+//            ard.addLast(i);
 //        }
-//        boolean a = ard1.equals(ard2);
-//        boolean b = ard2.equals(ard1);;
-//        ard1.addLast(10);
-//        boolean c = ard1.equals(ard2);
-//        ard1.removeLast();
-//        ard1.removeLast();
-//        ard1.addLast(10);
-//        boolean d = ard1.equals(ard2);
-//        return;
+//        Iterator<Integer> seer = ard.iterator();
+//        for (int i = 0; i < 9; i++) {
+//            assertEquals(i, (int) seer.next());
+//        }
+//        boolean x = seer.hasNext();
 //    }
 }
