@@ -14,31 +14,28 @@ public class TestArrayDequeEC {
         int opNum = 100000;
         for (int i = 0; i < opNum; i++) {
             int ctrlNum = StdRandom.uniform(0, 4);
-            switch (ctrlNum) {
-                case 0:
-                    sad.addFirst(i);
-                    ads.addFirst(i);
-                    break;
-                case 1:
-                    sad.addLast(i);
-                    ads.addLast(i);
-                    break;
-                case 2:
-                    if (!ads.isEmpty()) {
-                        assertEquals("RemoveFirst() Test Failed!\nWe expected it is" + ads.removeFirst()
-                                + ",But Actually it is" + sad.removeFirst() + ".",
-                                ads.removeFirst(), sad.removeFirst());
-                    }
-                    break;
-                case 3:
-                    if (!ads.isEmpty()) {
-                        assertEquals("RemoveLast() Test Failed!\nWe expected it is" + ads.removeLast()
-                                        + ",But Actually it is" + sad.removeLast() + ".",
-                                ads.removeLast(), sad.removeLast());
-                    }
-                    break;
-                default:
-                    break;
+            if (ctrlNum == 0) {
+                sad.addFirst(i);
+                ads.addFirst(i);
+            } else if (ctrlNum == 1) {
+                sad.addLast(i);
+                ads.addLast(i);
+            } else if (ctrlNum == 2) {
+                if (!ads.isEmpty() && !sad.isEmpty()) {
+                    int expect = ads.removeFirst();
+                    int actual = sad.removeFirst();
+                    assertEquals("removeFirst() Test Failed!\nWe expected it is>" + expect
+                                    + "<,But Actually it is>" +actual + "<.",
+                            expect, actual);
+                }
+            } else if (ctrlNum == 3) {
+                if (!ads.isEmpty() && !sad.isEmpty()) {
+                    int expect = ads.removeLast();
+                    int actual = sad.removeLast();
+                    assertEquals("removeFirst() Test Failed!\nWe expected it is" + expect
+                                    + ",But Actually it is" + actual + ".",
+                            expect, actual);
+                }
             }
         }
     }
@@ -61,5 +58,8 @@ public class TestArrayDequeEC {
                             + ",But Actually it is" + sad.get(i) + ".",
                     ads.get(i), sad.get(i));
         }
+    }
+    public static void main(String[] args) {
+        jh61b.junit.TestRunner.runTests(TestArrayDequeEC.class);
     }
 }
