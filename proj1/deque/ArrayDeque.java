@@ -2,9 +2,6 @@ package deque;
 
 import java.util.Iterator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
@@ -189,26 +186,28 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         return true;
     }
-//    public static void main(String[] args){
-////        ArrayDeque<Integer> ard = new ArrayDeque<>();
-////        Iterator<Integer> seer = ard.iterator();
-////        Iterator<Integer> seer1 = null;
-////        for (int i = 0; i < 10; i++) {
-////            ard.addLast(i);
-////        }
-////        int y;
-////        for (int i = 0; i < 100; i++) {
-////            seer.next();
-////        }
-////        boolean x = seer.hasNext();
+    public static void main(String[] args){
 //        ArrayDeque<Integer> ard = new ArrayDeque<>();
-//        for (int i = 0; i < 10;i++){
+//        Iterator<Integer> seer = ard.iterator();
+//        Iterator<Integer> seer1 = null;
+//        for (int i = 0; i < 10; i++) {
 //            ard.addLast(i);
 //        }
-//        Iterator<Integer> seer = ard.iterator();
-//        for (int i = 0; i < 9; i++) {
-//            assertEquals(i, (int) seer.next());
+//        int y;
+//        for (int i = 0; i < 100; i++) {
+//            seer.next();
 //        }
 //        boolean x = seer.hasNext();
-//    }
+        ArrayDeque<Integer> ard = new ArrayDeque<>();
+        for (int i = 0; i < 10;i++){
+            ard.addLast(i);
+        }
+        Iterator<Integer> seer = ard.iterator();
+        boolean y;
+        for (int i = 0; i < 9; i++) {
+            y = i == seer.next();
+        }
+        boolean x = seer.hasNext();
+        return;
+    }
 }
