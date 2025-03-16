@@ -59,7 +59,7 @@ public class TestArrayDequeEC {
                     ads.get(i), sad.get(i));
         }
     }
-    public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(TestArrayDequeEC.class);
-    }
+//    public static void main(String[] args) {
+//        jh61b.junit.TestRunner.runTests(TestArrayDequeEC.class);
+//    }
 }
