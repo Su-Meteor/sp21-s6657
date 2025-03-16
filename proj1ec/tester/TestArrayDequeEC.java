@@ -25,17 +25,41 @@ public class TestArrayDequeEC {
                     break;
                 case 2:
                     if (!ads.isEmpty()) {
-                        assertEquals("message", sad.removeFirst(), ads.removeFirst());
+                        assertEquals("RemoveFirst() Test Failed!\nWe expected it is" + ads.removeFirst()
+                                + ",But Actually it is" + sad.removeFirst() + ".",
+                                ads.removeFirst(), sad.removeFirst());
                     }
                     break;
                 case 3:
                     if (!ads.isEmpty()) {
-                        assertEquals("message", sad.removeLast(), ads.removeLast());
+                        assertEquals("RemoveLast() Test Failed!\nWe expected it is" + ads.removeLast()
+                                        + ",But Actually it is" + sad.removeLast() + ".",
+                                ads.removeLast(), sad.removeLast());
                     }
                     break;
                 default:
                     break;
             }
+        }
+    }
+    @Test
+    public void getMethodTest(){
+        StudentArrayDeque<Integer> sad = new StudentArrayDeque<>();
+        ArrayDequeSolution<Integer> ads = new ArrayDequeSolution<>();
+        for (int i = 0; i < 1000; i++){
+            int opNum = StdRandom.uniform(0, 2);
+            if (opNum == 0){
+                sad.addFirst(i);
+                ads.addFirst(i);
+            } else if (opNum == 1) {
+                sad.addLast(i);
+                ads.addLast(i);
+            }
+        }
+        for (int i = 0; i < 1000; i++) {
+            assertEquals("Get() Test Failed!\nWe expected it is" + ads.get(i)
+                            + ",But Actually it is" + sad.get(i) + ".",
+                    ads.get(i), sad.get(i));
         }
     }
 }
