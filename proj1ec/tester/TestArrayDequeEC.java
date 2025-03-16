@@ -22,18 +22,18 @@ public class TestArrayDequeEC {
                 ads.addLast(i);
             } else if (ctrlNum == 2) {
                 if (!ads.isEmpty() && !sad.isEmpty()) {
-                    int expect = ads.removeFirst();
-                    int actual = sad.removeFirst();
-                    assertEquals("removeFirst() Test Failed!\nWe expected it is>" + expect
+                    Integer expect = ads.removeFirst();
+                    Integer actual = sad.removeFirst();
+                    assertEquals("removeFirst() Test Failed!We expected it is>" + expect
                                     + "<,But Actually it is>" +actual + "<.",
                             expect, actual);
                 }
             } else if (ctrlNum == 3) {
                 if (!ads.isEmpty() && !sad.isEmpty()) {
-                    int expect = ads.removeLast();
-                    int actual = sad.removeLast();
-                    assertEquals("removeFirst() Test Failed!\nWe expected it is" + expect
-                                    + ",But Actually it is" + actual + ".",
+                    Integer expect = ads.removeLast();
+                    Integer actual = sad.removeLast();
+                    assertEquals("removeLast() Test Failed!We expected it is>" + expect
+                                    + "<,But Actually it is>" + actual + "<.",
                             expect, actual);
                 }
             }
@@ -59,7 +59,7 @@ public class TestArrayDequeEC {
                     ads.get(i), sad.get(i));
         }
     }
-//    public static void main(String[] args) {
-//        jh61b.junit.TestRunner.runTests(TestArrayDequeEC.class);
-//    }
+    public static void main(String[] args) {
+        jh61b.junit.TestRunner.runTests(TestArrayDequeEC.class);
+    }
 }
