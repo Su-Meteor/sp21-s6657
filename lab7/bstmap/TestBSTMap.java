@@ -22,6 +22,7 @@ public class TestBSTMap {
     @Test
     public void sanityClearTest() {
     	BSTMap<String, Integer> b = new BSTMap<String, Integer>();
+        System.out.println("hi10".compareTo("hi2"));
         for (int i = 0; i < 455; i++) {
             b.put("hi" + i, 1+i);
             //make sure put is working via containsKey and get
