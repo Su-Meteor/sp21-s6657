@@ -1,5 +1,6 @@
 package bstmap;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -124,12 +125,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        Set<K> set = new HashSet<>();
+        ;
+        return set;
     }
 
     @Override
     public V remove(K key) {
         BSTNote note = getKeyNote(root, key);
+        if (note == null) {
+            return null;
+        }
         BSTNote preNote = getPreNote(root, key);
         V val = note.val;
         boolean left = true;
@@ -158,8 +164,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (note == null) {
             return null;
         }
-        if (note.left.key == key || note.right.key == key) {
-            return note;
+        if (note.left != null) {
+            if (key.equals(note.left.key)) {
+                return note;
+            }
+        }
+        if (note.right != null) {
+            if (key.equals(note.right.key)) {
+                return note;
+            }
         }
         if (key.compareTo(note.key) < 0) {
             return getPreNote(note.left, key);
@@ -183,7 +196,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     }
                     break;
                 case 2:
-                    BSTNote newNote = getNearistLeftNote(note);
+                    BSTNote newNote = getNearistLeftNote(note.left);
                     BSTNote preNewNote = getPreNote(root, newNote.key);
                     preNote.left = newNote;
                     newNote.left = note.left;
@@ -205,7 +218,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     }
                     break;
                 case 2:
-                    BSTNote newNote = getNearistLeftNote(note);
+                    BSTNote newNote = getNearistLeftNote(note.left);
                     BSTNote preNewNote = getPreNote(root, newNote.key);
                     preNote.right = newNote;
                     newNote.left = note.left;
@@ -216,21 +229,23 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             }
         }
     }
-    public BSTNote getNearistLeftNote(BSTNote note) {
-        note = note.left;
+    private BSTNote getNearistLeftNote(BSTNote note) {
         if (note.right != null) {
-            return getNearistLeftNote(note);
+            return getNearistLeftNote(note.right);
         } else {
-            return note.right;
+            return note;
         }
     }
 
     @Override
     public V remove(K key, V value) {
         BSTNote note = getKeyNote(root, key);
+        if (note == null) {
+            return null;
+        }
         BSTNote preNote = getPreNote(root, key);
         V val = note.val;
-        if (val == value) {
+        if (val != value) {
             return null;
         }
         boolean left = true;
@@ -245,20 +260,35 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return new BSTMapIterator();
+    }
+    private class BSTMapIterator<T> implements Iterator<T> {
+        int pos;
+        BSTMapIterator() {
+            pos = 0;
+        }
+        @Override
+        public boolean hasNext() {
+            return pos < size;
+        }
+
+        @Override
+        public T next() {
+            return null;
+        }
     }
 
     public void printInOrder(){
         System.out.println("{keys,Values}");
-        inOrder(root);
+        printInOrder(root);
     }
-    private void inOrder(BSTNote note){
+    private void printInOrder(BSTNote note){
         if (note == null) {
             return;
         }
-        inOrder(note.left);
+        printInOrder(note.left);
         System.out.println("{" + note.key + "," + note.val + "}");
-        inOrder(note.right);
+        printInOrder(note.right);
     }
 
 
