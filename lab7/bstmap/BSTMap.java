@@ -20,8 +20,18 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             this.right = null;
         }
 
-        boolean is_leaf(){
+        boolean is_leaf() {
             return left == null && right == null;
+        }
+        int getChildNum() {
+            int childNum = 0;
+            if (this.left != null) {
+                childNum ++;
+            }
+            if (this.right != null) {
+                childNum ++;
+            }
+            return childNum;
         }
 
     }
@@ -119,12 +129,118 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        BSTNote note = getKeyNote(root, key);
+        BSTNote preNote = getPreNote(root, key);
+        V val = note.val;
+        boolean left = true;
+        if (preNote.left == note) {
+            left = true;
+        } else if (preNote.right == note) {
+            left = false;
+        }
+        removeNote(preNote, note, left);
+        return val;
+    }
+
+    private BSTNote getKeyNote(BSTNote note,K key) {
+        if (note == null) {
+            return null;
+        }
+        if (key.compareTo(note.key) < 0) {
+            return getKeyNote(note.left, key);
+        } else if (key.compareTo(note.key) > 0) {
+            return getKeyNote(note.right, key);
+        } else {
+            return note;
+        }
+    }
+    private BSTNote getPreNote(BSTNote note, K key) {
+        if (note == null) {
+            return null;
+        }
+        if (note.left.key == key || note.right.key == key) {
+            return note;
+        }
+        if (key.compareTo(note.key) < 0) {
+            return getPreNote(note.left, key);
+        } else if (key.compareTo(note.key) > 0) {
+            return getPreNote(note.right, key);
+        } else {
+            return null;
+        }
+    }
+    private void removeNote(BSTNote preNote, BSTNote note, boolean left) {
+        if (left) {
+            switch (note.getChildNum()) {
+                case 0:
+                    preNote.left = null;
+                    break;
+                case 1:
+                    if (note.left == null) {
+                        preNote.left = note.right;
+                    } else if (note.right == null){
+                        preNote.left = note.left;
+                    }
+                    break;
+                case 2:
+                    BSTNote newNote = getNearistLeftNote(note);
+                    BSTNote preNewNote = getPreNote(root, newNote.key);
+                    preNote.left = newNote;
+                    newNote.left = note.left;
+                    newNote.right = note.right;
+                    if (newNote.left != null) {
+                        preNewNote.right = newNote.left;
+                    }
+            }
+        } else {
+            switch (note.getChildNum()) {
+                case 0:
+                    preNote.right = null;
+                    break;
+                case 1:
+                    if (note.left == null) {
+                        preNote.right = note.right;
+                    } else if (note.right == null) {
+                        preNote.right = note.left;
+                    }
+                    break;
+                case 2:
+                    BSTNote newNote = getNearistLeftNote(note);
+                    BSTNote preNewNote = getPreNote(root, newNote.key);
+                    preNote.right = newNote;
+                    newNote.left = note.left;
+                    newNote.right = note.right;
+                    if (newNote.left != null) {
+                        preNewNote.right = newNote.left;
+                    }
+            }
+        }
+    }
+    public BSTNote getNearistLeftNote(BSTNote note) {
+        note = note.left;
+        if (note.right != null) {
+            return getNearistLeftNote(note);
+        } else {
+            return note.right;
+        }
     }
 
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        BSTNote note = getKeyNote(root, key);
+        BSTNote preNote = getPreNote(root, key);
+        V val = note.val;
+        if (val == value) {
+            return null;
+        }
+        boolean left = true;
+        if (preNote.left == note) {
+            left = true;
+        } else if (preNote.right == note) {
+            left = false;
+        }
+        removeNote(preNote, note, left);
+        return val;
     }
 
     @Override
