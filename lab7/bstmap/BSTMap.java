@@ -4,9 +4,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private int size;
     private BSTNote root;
+    private HashSet<K> keySet;
 
     private class BSTNote {
         K key;
@@ -39,6 +43,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     public BSTMap() {
         root = null;
+        keySet = new HashSet<>();
     }
 
     @Override
@@ -103,7 +108,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         } else {
             put(root, key, value);
         }
-
+        keySet.add(key);
         size++;
     }
     private void put(BSTNote note, K key, V value) {
@@ -125,19 +130,24 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Set<K> keySet() {
-        Set<K> set = new HashSet<>();
-        ;
-        return set;
+        return keySet;
     }
 
     @Override
     public V remove(K key) {
         BSTNote note = getKeyNote(root, key);
+        V val = note.val;
+        K k = note.key;
         if (note == null) {
             return null;
         }
+        if (note == root) {
+            removeRoot();
+            keySet.remove(k);
+            size--;
+            return val;
+        }
         BSTNote preNote = getPreNote(root, key);
-        V val = note.val;
         boolean left = true;
         if (preNote.left == note) {
             left = true;
@@ -145,6 +155,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             left = false;
         }
         removeNote(preNote, note, left);
+        keySet.remove(k);
+        size--;
         return val;
     }
 
@@ -196,14 +208,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     }
                     break;
                 case 2:
-                    BSTNote newNote = getNearistLeftNote(note.left);
+                    BSTNote newNote = getClosestLeftNote(note.left);
                     BSTNote preNewNote = getPreNote(root, newNote.key);
                     preNote.left = newNote;
+                    preNewNote.right = newNote.left;
                     newNote.left = note.left;
                     newNote.right = note.right;
-                    if (newNote.left != null) {
-                        preNewNote.right = newNote.left;
-                    }
+                    break;
+                default:
+                    return;
             }
         } else {
             switch (note.getChildNum()) {
@@ -218,20 +231,55 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     }
                     break;
                 case 2:
-                    BSTNote newNote = getNearistLeftNote(note.left);
+                    BSTNote newNote = getClosestLeftNote(note.left);
                     BSTNote preNewNote = getPreNote(root, newNote.key);
-                    preNote.right = newNote;
+                    preNote.left = newNote;
+                    preNewNote.right = newNote.left;
                     newNote.left = note.left;
                     newNote.right = note.right;
-                    if (newNote.left != null) {
-                        preNewNote.right = newNote.left;
-                    }
+                    break;
+                default :
+                    return;
             }
         }
     }
-    private BSTNote getNearistLeftNote(BSTNote note) {
+    private void removeRoot() {
+        switch (root.getChildNum()) {
+            case 0:
+                root = null;
+                break;
+            case 1:
+                if (root.right == null) {
+                    root = root.left;
+                } else if (root.left == null) {
+                    root = root.right;
+                }
+                break;
+            case 2:
+                BSTNote newNote = getClosestLeftNote(root.left);
+                BSTNote preNewNote = getPreNote(root,newNote.key);
+                if (preNewNote == root) {
+                    root.left = root.left.left;
+                }
+                newNote.left = root.left;
+                newNote.right = root.right;
+                root = newNote;
+                preNewNote.right = null;
+                break;
+            default:
+                return;
+        }
+    }
+    private BSTNote getClosestLeftNote(BSTNote note) {
         if (note.right != null) {
-            return getNearistLeftNote(note.right);
+            return getClosestLeftNote(note.right);
+        } else {
+            return note;
+        }
+    }
+    private BSTNote getClosestRightNote(BSTNote note) {
+        if (note.left != null) {
+            return getClosestRightNote(note.left);
         } else {
             return note;
         }
@@ -260,7 +308,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        return new BSTMapIterator();
+        throw new UnsupportedOperationException();
+//        return new BSTMapIterator();
     }
     private class BSTMapIterator<T> implements Iterator<T> {
         int pos;
@@ -290,6 +339,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         System.out.println("{" + note.key + "," + note.val + "}");
         printInOrder(note.right);
     }
+    public static void main(String[] args) {
 
+    }
 
 }
