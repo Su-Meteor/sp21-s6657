@@ -35,8 +35,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     /* Instance Variables */
     private Collection<Node>[] buckets;
     private HashSet<K> keySet;
-    int size;
-    double loadFactor;
+    private int size;
+    private double loadFactor;
     // You should probably define some more!
 
     /** Constructors */
@@ -238,20 +238,5 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         public Node next() {
             return queue.poll();
         }
-    }
-    public static void main(String[] args) {
-        MyHashMap<String, String> q = new MyHashMap<>();
-        q.put("c", "a");
-        q.put("b", "a");
-        q.put("a", "a");
-        q.put("d", "a");
-        q.put("e", "a"); // a b c d e
-        q.remove("c");
-        boolean x;
-        x = q.containsKey("c");
-        x = q.containsKey("a");
-        x = q.containsKey("b");
-        x = q.containsKey("d");
-        x = q.containsKey("e");
     }
 }
